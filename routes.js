@@ -1,5 +1,5 @@
 const bodyParser = require('body-parser');
-const googlePlaceService = require('./src/service/GooglePlaces');
+const googlePlaceService = require('./src/services/GooglePlaces');
 
 function init(app, router) {
   app.use(bodyParser.json());
