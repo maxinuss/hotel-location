@@ -1,5 +1,5 @@
 const bodyParser = require('body-parser');
-const googlePlace = require('./src/models/GooglePlace');
+const googlePlaceService = require('./src/service/GooglePlaces');
 
 function init(app, router) {
   app.use(bodyParser.json());
@@ -20,7 +20,7 @@ function routes(router) {
 
   router.get('/properties', async (req, res) => {
     const latLong = req.query.at;
-    const result = await googlePlace.getFormattedPlace(
+    const result = await googlePlaceService.getFormattedPlace(
         latLong
     );
 
