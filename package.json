@@ -6,7 +6,7 @@
   "scripts": {
     "test": "nyc --reporter=lcov --reporter=text mocha --recursive",
     "migration": "node_modules/.bin/sequelize db:migrate --config sequelize/config/config.js --migrations-path sequelize/migrations",
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
