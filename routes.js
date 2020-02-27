@@ -21,9 +21,7 @@ function routes(router) {
 
   router.get('/properties', async (req, res) => {
     const latLong = req.query.at;
-    const result = await googlePlaceService.getFormattedPlace(
-        latLong
-    );
+    const result = await googlePlaceService.getFormattedPlace(latLong);
 
     res.status(200).json(result);
   });
@@ -31,11 +29,18 @@ function routes(router) {
   router.post('/bookings', async (req, res) => {
     const userId = req.body.userId;
     const propertyId = req.body.propertyId;
+    const result = await bookingModel.addBooking(propertyId, userId);
 
-    const result = await bookingModel.addBooking(
-        userId,
-        propertyId
-    );
+    if (result.error) {
+      res.status(500).json(result);
+    }
+
+    res.status(200).json(result);
+  });
+
+  router.get('/properties/:propertyId/bookings', async (req, res) => {
+    const propertyId = req.params.propertyId;
+    const result = await bookingModel.getBooking(propertyId);
 
     if (result.error) {
       res.status(500).json(result);
