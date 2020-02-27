@@ -11,6 +11,8 @@ services:
       - "3048:3000"
     networks:
       - nusspaumer-network
+    depends_on:
+      - hl_db_nusspaumer
 
   hl_db_nusspaumer:
     image: postgres:11.5
@@ -21,8 +23,6 @@ services:
       POSTGRES_PASSWORD: root
       POSTGRES_USER: root
       POSTGRES_DB: hotel_location
-    volumes:
-      - ./docker/postgresql/data:/var/lib/postgresql/data
     networks:
       - nusspaumer-network
 
@@ -30,7 +30,6 @@ networks:
   nusspaumer-network:
     name: nusspaumer-network
     driver: "bridge"
-
 volumes:
   data:
     driver: "local"
