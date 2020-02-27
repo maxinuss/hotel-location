@@ -57,6 +57,11 @@ function routes(router) {
 
   router.get('/properties/:propertyId/bookings', async (req, res) => {
     const propertyId = req.params.propertyId;
+
+    if (!parseInt(propertyId)) {
+      res.status(400).json({ success: false, error: 'Please provide numeric property ID' });
+    }
+
     const result = await bookingModel.getBooking(propertyId);
 
     if (result.error) {
