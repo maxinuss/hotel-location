@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser');
 const googlePlaceService = require('./src/services/GooglePlaces');
+const bookingModel = require('./src/models/Booking');
 
 function init(app, router) {
   app.use(bodyParser.json());
@@ -23,6 +24,22 @@ function routes(router) {
     const result = await googlePlaceService.getFormattedPlace(
         latLong
     );
+
+    res.status(200).json(result);
+  });
+
+  router.post('/bookings', async (req, res) => {
+    const userId = req.body.userId;
+    const propertyId = req.body.propertyId;
+
+    const result = await bookingModel.addBooking(
+        userId,
+        propertyId
+    );
+
+    if (result.error) {
+      res.status(500).json(result);
+    }
 
     res.status(200).json(result);
   });
