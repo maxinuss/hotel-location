@@ -7,26 +7,46 @@ const GOOGLE_MAPS_SEARCH_DEFAULT_RADIUS = process.env.GOOGLE_MAPS_SEARCH_DEFAULT
 const GOOGLE_MAPS_SEARCH_DEFAULT_KEYWORD = process.env.GOOGLE_MAPS_SEARCH_DEFAULT_KEYWORD;
 const GOOGLE_MAPS_SEARCH_DEFAULT_TYPE = process.env.GOOGLE_MAPS_SEARCH_DEFAULT_TYPE;
 
+/**
+ *
+ * @param latLong
+ * @returns {Promise<PlacesNearbyResponseData>}
+ */
 async function getPlace(latLong){
     const result = await client.placesNearby({
-            params: {
-                key: GOOGLE_MAPS_API_KEY,
-                location: latLong,
-                keyword: GOOGLE_MAPS_SEARCH_DEFAULT_KEYWORD,
-                type: GOOGLE_MAPS_SEARCH_DEFAULT_TYPE,
-                radius: parseInt(GOOGLE_MAPS_SEARCH_DEFAULT_RADIUS),
-            },
-            timeout: parseInt(GOOGLE_MAPS_SEARCH_DEFAULT_TIMEOUT)
-        });
+        params: {
+            key: GOOGLE_MAPS_API_KEY,
+            location: latLong,
+            keyword: GOOGLE_MAPS_SEARCH_DEFAULT_KEYWORD,
+            type: GOOGLE_MAPS_SEARCH_DEFAULT_TYPE,
+            radius: parseInt(GOOGLE_MAPS_SEARCH_DEFAULT_RADIUS),
+        },
+        timeout: parseInt(GOOGLE_MAPS_SEARCH_DEFAULT_TIMEOUT)
+    });
 
-    return result.data.results;
+    return result.data;
 }
 
+/**
+ *
+ * @param latLong
+ * @returns {Promise<{success: boolean, message: string}|[]|{success: boolean, error: string}>}
+ */
 async function getFormattedPlace(latLong){
     const data = await getPlace(latLong);
+
     let results = [];
 
-    for (let hotel of data) {
+    if (data.results.length === 0 && data.error_message) {
+        console.log(data.error_message);
+        return { success: false, error: data.error_message };
+    }
+
+    if (data.results.length === 0) {
+        return { success: true, message: "Please try with another location." };
+    }
+
+    for (let hotel of data.results) {
         results.push({
             id: hotel.place_id,
             name: hotel.name,

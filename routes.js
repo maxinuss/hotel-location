@@ -34,6 +34,10 @@ function routes(router) {
     const latLong = req.query.at;
     const result = await googlePlaceService.getFormattedPlace(latLong);
 
+    if (result.error) {
+      res.status(401).json(result);
+    }
+
     res.status(200).json(result);
   });
 
