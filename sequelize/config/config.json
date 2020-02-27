@@ -1,9 +1,0 @@
-{
-  "development": {
-    "username": "root",
-    "password": "root",
-    "database": "hotel_location",
-    "host": "hotel_location_db_nusspaumer_container",
-    "dialect": "postgres"
-  }
-}
