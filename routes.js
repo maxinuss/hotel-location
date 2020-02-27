@@ -2,6 +2,11 @@ const bodyParser = require('body-parser');
 const googlePlaceService = require('./src/services/GooglePlaces');
 const bookingModel = require('./src/models/Booking');
 
+/**
+ *
+ * @param app
+ * @param router
+ */
 function init(app, router) {
   app.use(bodyParser.json());
   routes(router);
@@ -9,6 +14,11 @@ function init(app, router) {
   app.use('/api/', router);
 }
 
+/**
+ *
+ * @param router
+ * @returns {*}
+ */
 function routes(router) {
   router.get('/health-check', async (req, res) => {
     const result = {
@@ -19,12 +29,14 @@ function routes(router) {
     res.status(200).json(result);
   });
 
+
   router.get('/properties', async (req, res) => {
     const latLong = req.query.at;
     const result = await googlePlaceService.getFormattedPlace(latLong);
 
     res.status(200).json(result);
   });
+
 
   router.post('/bookings', async (req, res) => {
     const userId = req.body.userId;
@@ -38,6 +50,7 @@ function routes(router) {
     res.status(200).json(result);
   });
 
+
   router.get('/properties/:propertyId/bookings', async (req, res) => {
     const propertyId = req.params.propertyId;
     const result = await bookingModel.getBooking(propertyId);
@@ -48,6 +61,7 @@ function routes(router) {
 
     res.status(200).json(result);
   });
+
 
   return router;
 }

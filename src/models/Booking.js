@@ -1,5 +1,11 @@
 const client = require('../db').db;
 
+/**
+ *
+ * @param property_id
+ * @param user_id
+ * @returns {Promise<{success: boolean, error: *}|{success: boolean, bookingData: {[p: string]: *}}>}
+ */
 module.exports.addBooking = async function addBooking(property_id, user_id){
     const queryText = 'INSERT INTO ' +
         'booking (property_id, user_id, creation_datetime) ' +
@@ -18,6 +24,11 @@ module.exports.addBooking = async function addBooking(property_id, user_id){
     }
 }
 
+/**
+ *
+ * @param property_id
+ * @returns {Promise<{success: boolean, error: *}|{success: boolean, bookingData: {[p: string]: *}}>}
+ */
 module.exports.getBooking = async function getBooking(property_id){
     const queryText = 'SELECT * FROM booking WHERE property_id = $1';
     const values = [property_id];
