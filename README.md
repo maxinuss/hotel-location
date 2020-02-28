@@ -121,3 +121,7 @@ To run test:
 
 * if you use Docker ```make node``` (or ```docker exec -it hotel_location_node_nusspaumer_container bash```) and ```npm test```
 * if you dont use Docker ```npm test```
+
+#### Minimal front end
+In your browser
+``` http://{{URL}}/index.html ```
