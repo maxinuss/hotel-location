@@ -19,7 +19,6 @@ module.exports.addBooking = async function addBooking(property_id, user_id){
         const res = await client.query(queryText, values);
         return { success: true, bookingData: {...res.rows[0]}};
     } catch (err) {
-        console.log(err.stack);
         return { success: false, error: err.stack };
     }
 }
@@ -37,7 +36,6 @@ module.exports.getBooking = async function getBooking(property_id){
         const res = await client.query(queryText, values);
         return { success: true, bookingData: {...res.rows}};
     } catch (err) {
-        console.log(err.stack);
         return { success: false, error: err.stack };
     }
 }

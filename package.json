@@ -41,7 +41,7 @@
       "src/**/*.js"
     ],
     "exclude": [
-      ""
+      "src/db.js"
     ],
     "all": true
   }
