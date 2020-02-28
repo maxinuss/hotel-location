@@ -117,3 +117,7 @@ Response:
 Postman collection: https://www.getpostman.com/collections/f755f53600a0a0881834
 
 #### Test
+To run test:
+
+* if you use Docker ```make node``` (or ```docker exec -it hotel_location_node_nusspaumer_container bash```) and ```npm test```
+* if you dont use Docker ```npm test```
