@@ -7,6 +7,7 @@ services:
     container_name: hotel_location_node_nusspaumer_container
     volumes:
       - .:/hotel-location
+      - node_modules:/hotel-location/node_modules
     ports:
       - "3048:3000"
     networks:
@@ -31,5 +32,6 @@ networks:
     name: nusspaumer-network
     driver: "bridge"
 volumes:
+  node_modules:
   data:
     driver: "local"
