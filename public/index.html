@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        body {
+            font-family: Arial,serif;
+            margin: 30px;
+        }
+
+        h1 {
+
+        }
+
+        .box {
+            border: 1px solid grey;
+            margin: 10px 0 10px 0;
+            padding: 10px;
+        }
+
+        .box label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Minimal frontend with static view</h1>
+
+    <label>Booking for this property</label>
+    <input type="text" placeholder="property id here" id="propertyId">
+    <input type="button" onclick="search();" value="Search">
+
+    <div id="booking"></div>
+
+    <script>
+        const getJSON = function(url, callback) {
+            let xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.responseType = 'json';
+            xhr.onload = function() {
+                const status = xhr.status;
+                if (status === 200) {
+                    callback(null, xhr.response);
+                } else {
+                    callback(status, xhr.response);
+                }
+            };
+            xhr.send();
+        };
+
+        function search(){
+            const propertyId = document.getElementById('propertyId').value;
+
+            if (propertyId === '') {
+                alert('Please complete property id field');
+                return false;
+            }
+
+            document.getElementById('booking').innerHTML = '';
+
+            getJSON('http://localhost:3048/api/properties/' + propertyId + '/bookings',
+            function(err, data) {
+                if (err !== null) {
+                    alert('Something went wrong: ' + err);
+                } else {
+                    let innerHtml = document.getElementById('booking').innerHTML;
+                    let html;
+
+                    if (data.data.length === 0) {
+                        document.getElementById('booking').innerHTML = 'No results';
+                        return;
+                    }
+
+                    data.data.forEach(element => {
+                        html = '<div class="box">' +
+                            '<p class="property"> <label>PropertyId</label>: ' + element.property_id + '</p>' +
+                            '<p class="user"><label>UserId</label>: ' + element.user_id + '</p>' +
+                            '<p class="date"><label>Date</label>: ' + element.creation_datetime + '</p>' +
+                            '</div>';
+
+                        innerHtml = innerHtml + html;
+
+                        document.getElementById('booking').innerHTML = innerHtml;
+                    });
+
+
+                }
+            });
+        }
+    </script>
+</body>
+</html>

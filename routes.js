@@ -5,21 +5,21 @@ const bookingModel = require('./src/models/Booking');
 /**
  *
  * @param app
+ * @param express
  * @param router
  */
-function init(app, router) {
+function init(app, express, router) {
   app.use(bodyParser.json());
-  routes(router);
+  app.use('/api/',  apiRoutes(router));
 
-  app.use('/api/', router);
+  app.use(express.static('public'));
 }
-
 /**
  *
  * @param router
  * @returns {*}
  */
-function routes(router) {
+function apiRoutes(router) {
   router.get('/health-check', async (req, res) => {
     const result = {
       status: 'OK',
@@ -70,7 +70,6 @@ function routes(router) {
 
     res.status(200).json(result);
   });
-
 
   return router;
 }

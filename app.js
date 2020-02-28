@@ -7,7 +7,7 @@ const router = express.Router();
 const app = express();
 
 app.listen(process.env.PORT, () => {
-    routes.init(app, router);
+    routes.init(app, express, router);
 
     console.log(
         `[${Date.now()}][${process.env.ENV}:${process.env.NAME}] [LISTENING:${
