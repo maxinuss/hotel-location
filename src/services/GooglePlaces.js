@@ -30,11 +30,11 @@ async function getPlace(latLong){
 /**
  *
  * @param latLong
- * @returns {Promise<{success: boolean, message: string}|[]|{success: boolean, error: string}>}
+ * @returns {Promise<{success: boolean, message: string}|
+ * {success: boolean, error: string}|{data: [], success: boolean}>}
  */
 async function getFormattedPlace(latLong){
     const data = await getPlace(latLong);
-
     let results = [];
 
     if (data.results.length === 0 && data.error_message) {
@@ -56,7 +56,7 @@ async function getFormattedPlace(latLong){
         })
     }
 
-    return results;
+    return { success: true, data: results };
 }
 
 module.exports.getFormattedPlace = getFormattedPlace;

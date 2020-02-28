@@ -4,7 +4,7 @@ const client = require('../db').db;
  *
  * @param property_id
  * @param user_id
- * @returns {Promise<{success: boolean, error: *}|{success: boolean, bookingData: {[p: string]: *}}>}
+ * @returns {Promise<{success: boolean, error: *}|{data: *, success: boolean}>}
  */
 module.exports.addBooking = async function addBooking(property_id, user_id){
     const queryText = 'INSERT INTO ' +
@@ -17,7 +17,7 @@ module.exports.addBooking = async function addBooking(property_id, user_id){
 
     try {
         const res = await client.query(queryText, values);
-        return { success: true, bookingData: {...res.rows[0]}};
+        return { success: true, data: res.rows[0]};
     } catch (err) {
         return { success: false, error: err.stack };
     }
@@ -26,7 +26,7 @@ module.exports.addBooking = async function addBooking(property_id, user_id){
 /**
  *
  * @param property_id
- * @returns {Promise<{success: boolean, error: *}|{success: boolean, bookingData: {[p: string]: *}}>}
+ * @returns {Promise<{success: boolean, error: *}|{success: boolean, bookingData: *}>}
  */
 module.exports.getBooking = async function getBooking(property_id){
     const queryText = 'SELECT * FROM booking WHERE property_id = $1';
@@ -34,7 +34,7 @@ module.exports.getBooking = async function getBooking(property_id){
 
     try {
         const res = await client.query(queryText, values);
-        return { success: true, bookingData: {...res.rows}};
+        return { success: true, data: res.rows };
     } catch (err) {
         return { success: false, error: err.stack };
     }

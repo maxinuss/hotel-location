@@ -53,15 +53,18 @@ Instructions:
 
 Response
 ```
-[
-    {
-        "id": "ChIJWbSN8q5ZwokRpLN00upxy8g",
-        "name": "Hotel Pennsylvania",
-        "rating": 2.8,
-        "vicinity": "401 7th Ave, New York",
-        "latLong": "40.7499775, -73.9910082"
-    }
-]
+{
+    "success": true,
+    "data": [
+        {
+            "id": "ChIJWbSN8q5ZwokRpLN00upxy8g",
+            "name": "Hotel Pennsylvania",
+            "rating": 2.8,
+            "vicinity": "401 7th Ave, New York",
+            "latLong": "40.7499775, -73.9910082"
+        }
+    ]
+}
 ```
 
 ###### Add booking: ```POST``` http://{{URL}}/api/bookings
@@ -79,7 +82,7 @@ Response
 ```
 {
     "success": true,
-    "bookingData": {
+    "data": {
         "id": 19,
         "property_id": 90,
         "user_id": 1,
@@ -94,14 +97,14 @@ Response:
 ```
 {
     "success": true,
-    "bookingData": {
-        "0": {
+    "data": {
+        {
             "id": 18,
             "property_id": 90,
             "user_id": 1,
             "creation_datetime": "2020-02-25T08:45:05.859Z"
         },
-        "1": {
+        {
             "id": 19,
             "property_id": 90,
             "user_id": 7,
