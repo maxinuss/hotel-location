@@ -60,7 +60,7 @@
 
             document.getElementById('booking').innerHTML = '';
 
-            getJSON('http://localhost:3048/api/properties/' + propertyId + '/bookings',
+            getJSON('http://' + window.location.hostname + ':3048/api/properties/' + propertyId + '/bookings',
             function(err, data) {
                 if (err !== null) {
                     alert('Something went wrong: ' + err);
